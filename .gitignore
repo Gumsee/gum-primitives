@@ -1,0 +1,12 @@
+/build/
+/.cache/
+/.vscode/
+/compile_commands.json
+/core
+/lib/*
+*.so
+*.out
+*.log
+*.cmake
+libGumEssentials.a
+Makefile
