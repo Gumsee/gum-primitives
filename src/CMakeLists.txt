@@ -52,12 +52,12 @@ add_custom_command( #combinedtarget ALL
     COMMAND ar -x $<TARGET_FILE:${CMAKE_PROJECT_NAME}_trgt>
     COMMAND sh -c "ar -qcs \"${COMBINED_LIB}\" *.o"
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/combined/
-    DEPENDS  createcombineddir
+    DEPENDS  createcombineddir ${CMAKE_PROJECT_NAME}_trgt
     COMMENT "Combining libs"
     VERBATIM
 )
 
-add_custom_target(combinedlibtarget DEPENDS ${COMBINED_LIB})
+add_custom_target(combinedlibtarget ALL DEPENDS ${COMBINED_LIB})
 
 # Create an library target out of the library compilation result
 add_library(${CMAKE_PROJECT_NAME} STATIC IMPORTED GLOBAL)

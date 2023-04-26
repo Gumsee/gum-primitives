@@ -35,8 +35,7 @@ public:
     //Getter
     unsigned int numVertices() const;
     unsigned int numIndices() const;
-    Vertex getVertex(const unsigned int& index) const;
-    Vertex* getVertexPtr(const unsigned int& index);
+    Vertex& getVertex(const unsigned int& index);
     unsigned int getIndex(const unsigned int& index) const;
     std::vector<Vertex> getVertexBuffer() const;
     std::vector<unsigned int> getIndexBuffer() const;

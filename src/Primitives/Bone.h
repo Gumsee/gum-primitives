@@ -5,11 +5,6 @@
 #include <sstream>
 #include <vector>
 
-#include <assimp/scene.h>
-
-
-class Skeleton;
-
 class Bone
 {
 private: 
@@ -19,13 +14,14 @@ private:
       Bone* pParentBone; 
       mat4 m4OffsetMatrix;
 
-      Skeleton* parent_skeleton;
       std::vector<vec3> PosKeys;
       std::vector<quat> RotKeys;
       std::vector<float> Times;
       std::vector<Bone*> vChildren;
 
       unsigned int iID;
+
+      void setParent(Bone* bone);
 
 public:
       Bone(Mesh* in_mesh, unsigned int in_id, std::string in_name, mat4 in_o_mat, mat4 transform);
@@ -41,8 +37,6 @@ public:
       void addChild(Bone* bone);
 
       void setTransform(mat4 trans);
-      void setParent(Bone* bone);
-      void setNodeAnim(aiNodeAnim* nodeanim);
 
       Bone* getParent();
       Bone* getChild(int index);
@@ -51,4 +45,5 @@ public:
       mat4 getTransform();
       std::string getName();
       unsigned int getID();
+      std::string hierarchyString(unsigned int level);
 };

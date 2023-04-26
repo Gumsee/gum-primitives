@@ -90,8 +90,29 @@ void Bone::UpdateKeyframeTransform(float time)
 }
 
 
-void Bone::addChild(Bone* bone)              { this->vChildren.push_back(bone); }
+void Bone::addChild(Bone* bone) 
+{ 
+    if(bone != nullptr)
+    {
+        this->vChildren.push_back(bone);
+        bone->setParent(this);
+    }
+}
 
+std::string Bone::hierarchyString(unsigned int level)
+{
+    std::string retStr = Tools::repeatString("  ", level) + sName + "\n";
+
+    for(Bone* child : vChildren)
+        retStr += child->hierarchyString(level + 1);
+
+    return retStr;
+}
+
+
+//
+// Setter
+//
 void Bone::setParent(Bone* bone)             { this->pParentBone = bone; }
 /*void Bone::setNodeAnim(aiNodeAnim* nodeanim)
 {

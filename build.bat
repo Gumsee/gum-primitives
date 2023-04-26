@@ -19,4 +19,4 @@ cmake --build . --target ALL_BUILD --config %CONFIG%
 cd "%ROOTDIR%"
 rem copy "%BUILDDIR%\compile_commands.json" .
 
-echo Finished creation of: gum-codecs
+echo Finished creation of: gum-primitives

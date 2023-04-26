@@ -162,8 +162,7 @@ Mesh* Mesh::generatePlane(const vec2& dimensions)
 //Getters
 unsigned int Mesh::numVertices() const                       { return this->vVertices.size(); }
 unsigned int Mesh::numIndices() const                        { return this->vIndices.size(); }
-Vertex Mesh::getVertex(const unsigned int& index) const      { return this->vVertices[index]; }
-Vertex* Mesh::getVertexPtr(const unsigned int& index)        { return &this->vVertices[index]; }
+Vertex& Mesh::getVertex(const unsigned int& index)           { return this->vVertices[index]; }
 unsigned int Mesh::getIndex(const unsigned int& index) const { return this->vIndices[index]; }
 std::vector<Vertex> Mesh::getVertexBuffer() const            { return this->vVertices; }
 std::vector<unsigned int> Mesh::getIndexBuffer() const       { return this->vIndices; }
