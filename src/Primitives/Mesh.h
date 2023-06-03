@@ -31,6 +31,7 @@ public:
     static Mesh* generateCube(const vec3& dimensions);
     static Mesh* generatePlane(const  vec2& dimensions);
 
+	void writeMeshInfoToFile(std::string filename);
 
     //Getter
     unsigned int numVertices() const;

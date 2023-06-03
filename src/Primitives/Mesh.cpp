@@ -1,5 +1,5 @@
 #include "Mesh.h"
-
+#include <fstream>
 
 Mesh::Mesh() 
 {
@@ -156,6 +156,36 @@ Mesh* Mesh::generatePlane(const vec2& dimensions)
     mesh->vIndices = {0, 1, 2, 1, 3, 2};
 
 	return mesh;
+}
+
+
+//Side Functions
+void Mesh::writeMeshInfoToFile(std::string filename)  //Move to fileparser
+{
+	//Gum::Output::info("Writing Mesh Info " + getName() + " to " + filename);
+	std::ofstream file(filename);
+
+	//General Info
+	file << "//General Information\n";
+	file << "std::string Name = " << name << ";\n";
+
+	//Vertex Info
+	std::string verticesString;
+	for(size_t i = 0; i < numVertices(); i++) { verticesString += getVertex(i).toString("vec3(", "vec2(") + ", \n"; };
+
+	std::string indicesString;
+	for(size_t i = 0; i < numIndices(); i++) { indicesString += std::to_string(getIndex(i)) + ", "; };
+	
+	file << "\n//Vertices Information\n";
+	file << "std::vector<Vertex> vertices = { \n" << verticesString << "};\n";
+	file << "std::vector<int> indices = {" << indicesString << "};\n";
+
+	/*file << "\n#Transformation Information\n";
+	file << "Position: " << Tools::Vec3ToString(this->pProperties->getPosition()) << "\n";
+	file << "Rotation: " << Tools::Vec3ToString(this->pProperties->getRotationEuler()) << "\n";
+	file << "Scale: " << Tools::Vec3ToString(this->pProperties->getScale()) << "\n";*/
+
+	file.close();
 }
 
 
