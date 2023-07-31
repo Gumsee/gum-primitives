@@ -1,8 +1,9 @@
 #pragma once
 #include <Maths/vec.h>
 #include <vector>
+#include "UniqueID.h"
 
-class Curve : private std::vector<vec3>
+class Curve : private std::vector<vec3>, public UniqueID
 {
 public:
     enum CurveType
@@ -37,5 +38,6 @@ public:
     //Getter
     CurveType getType() const;
     std::vector<vec3> getData() const;
+    std::vector<vec3> getControlpoints() const;
     unsigned int numPoints() const;
 };

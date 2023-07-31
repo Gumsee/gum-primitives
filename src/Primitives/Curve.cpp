@@ -123,6 +123,7 @@ void Curve::setType(const CurveType& type) { this->iType = type; }
 //
 // Getter
 //
-Curve::CurveType Curve::getType() const  { return this->iType; }
-std::vector<vec3> Curve::getData() const { return vData; }
-unsigned int Curve::numPoints() const    { return (unsigned int)this->size(); }
+Curve::CurveType Curve::getType() const           { return this->iType; }
+std::vector<vec3> Curve::getData() const          { return vData; }
+std::vector<vec3> Curve::getControlpoints() const { return (std::vector<vec3>)*this; }
+unsigned int Curve::numPoints() const             { return (unsigned int)this->size(); }

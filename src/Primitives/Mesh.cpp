@@ -1,5 +1,8 @@
 #include "Mesh.h"
+#include "Maths/Maths.h"
+#include <GumSystem/System/Output.h>
 #include <fstream>
+#include <math.h>
 
 Mesh::Mesh() 
 {
@@ -156,6 +159,30 @@ Mesh* Mesh::generatePlane(const vec2& dimensions)
     mesh->vIndices = {0, 1, 2, 1, 3, 2};
 
 	return mesh;
+}
+
+Mesh* Mesh::generateCircle(const vec2& dimensions, const unsigned int& resolution)
+{
+    return generateArc(dimensions, 360.0, resolution);
+}
+
+Mesh* Mesh::generateArc(const vec2& dimensions, const double& angle, const unsigned int& resolution)
+{
+    Mesh* mesh = new Mesh();
+
+    double stepsize = angle / (double)resolution;
+    for(double i = 0; i < angle; i += stepsize)
+    {
+        Vertex vert;
+        vert.position = vec3(
+            cos(Gum::Maths::toRadians(i)) * dimensions.x,
+            0.0f,
+            sin(Gum::Maths::toRadians(i)) * dimensions.y
+        );
+        mesh->addVertex(vert);
+    }
+
+    return mesh;
 }
 
 

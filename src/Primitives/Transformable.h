@@ -12,7 +12,7 @@ public:
     Transformable();
     ~Transformable();
     
-    void updateMatrix();
+    virtual void updateMatrix();
     virtual void onTransformUpdate() {};
 
 
@@ -26,8 +26,8 @@ public:
     void increaseRotation(vec3 rot);
     void increaseScale(vec3 scale);
     
-	vec3 getPosition() const;
-	quat getRotation() const;
-	vec3 getScale() const;
-	mat4 getMatrix() const;
+	virtual vec3 getPosition() const;
+	virtual quat getRotation() const;
+	virtual vec3 getScale() const;
+	virtual mat4 getMatrix() const;
 };
