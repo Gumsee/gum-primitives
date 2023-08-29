@@ -28,6 +28,12 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(GUM_OS_MACOS true)
     set(GUM_OS_UNIX true)
 
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Android")
+    add_definitions(-DGUM_OS_ANDROID)
+    add_definitions(-DGUM_OS_UNIX)
+    set(GUM_OS_ANDROID true)
+    set(GUM_OS_UNIX true)
+
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
     add_definitions(-DGUM_OS_BSD)
     add_definitions(-DGUM_OS_UNIX)
@@ -52,11 +58,17 @@ endif()
 set(CMAKE_INSTALL_FULL_INCLUDEDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR})
 set(CMAKE_INSTALL_FULL_LIBDIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
 
-message(STATUS "${CMAKE_PROJECT_NAME}: CXXFLAGS: ${CMAKE_CXX_FLAGS}")
+message(STATUS "${PROJECT_NAME}: CXXFLAGS: ${CMAKE_CXX_FLAGS}")
 
  
-    find_package(GumEssentials REQUIRED) 
-    find_package(GumMaths REQUIRED)
+    
+        if(NOT GUMESSENTIALS_FOUND) 
+            find_package(GumEssentials REQUIRED)
+        endif() 
+    
+        if(NOT GUMMATHS_FOUND) 
+            find_package(GumMaths REQUIRED)
+        endif()
 
 #add_definitions(-DDEBUG)
 add_definitions(-DCHECK_GL_ERRORS)
