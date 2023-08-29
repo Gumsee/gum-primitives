@@ -1,6 +1,5 @@
 #include "Mesh.h"
 #include "Maths/Maths.h"
-#include <GumSystem/System/Output.h>
 #include <fstream>
 #include <math.h>
 
