@@ -1,56 +1,64 @@
 #pragma once
+#include <map>
 #include <string>
-#include <Maths/vec.h>
-
-//Here are two convenience functions, they will become very convenient later on.
-//IMPORTANT!!!! The 0.041666666667 float in these functions is equal to
-//    1.0 / 24.0, which is how many frames there are in a second, as the software
-//    I am using (Blender 3D), plays SkeletalAnimations at 24 frames per second.
-
-//This first function converts from a time passed in (in seconds) to the number
-//of frames to which it corresponds.
-/*static float TimeToFrame(float time)
-{
-    float frame = 0.041666666667;
-    return time / frame;
-}*/
-
-//This next function converts from a start frame and an end frame passed in to
-//a start time and an end time, both of which are stored in a vec2.
-static vec2 FramesToTime(vec2 frames)
-{
-    float frame = 0.041666666667;
-    return frames * frame;
-}
+#include <Maths/quat.h>
+#include "Bone.h"
 
 class SkeletalAnimation
 {
 public:
-    std::string name;
-    float speed, YOffset;
-    float start_time;  //The start time of the SkeletalAnimation (in seconds)
-    float end_time;    //The end time of the SkeletalAnimation (in seconds)
-    int priority;      //The priority of this SkeletalAnimation, if another
-                    //SkeletalAnimation is being played and we try to play
-                    //this one, this one will only play if it has
-                    //a lower priority than the one being played,
-                    //this way, the more important SkeletalAnimations are
-                    //always the ones selected to be played.
-
-    SkeletalAnimation()
+    struct PositionKeyframe
     {
-        start_time = end_time = priority = 0; //Set everything to zero...
-    }
+        vec3 pos;
+        float time;
 
-    SkeletalAnimation(std::string in_name, vec2 times, int in_priority, float speed, float YOffset)
+        PositionKeyframe(vec3 pos, float time)
+            : pos(pos), time(time) {}
+    };
+
+    struct RotationKeyframe
     {
-        this->speed = speed;
-        name = in_name;
+        quat rot;
+        float time;
 
-        vec2 frametimes = FramesToTime(times);
-        start_time = frametimes.x;
-        end_time = frametimes.y;
-        priority = in_priority;
-        this->YOffset = YOffset;
-    }
+        RotationKeyframe(quat rot, float time)
+            : rot(rot), time(time) {}
+    };
+
+private:
+    std::string sName;
+    float fSpeed;
+    float fCurrentTime;
+    float fStartTime;
+    float fEndTime;
+    int iPriority;
+    bool bIsActive;
+
+    std::map<Bone*, crate<PositionKeyframe> > mPosKeyframes;
+    std::map<Bone*, crate<RotationKeyframe> > mRotKeyframes;
+
+    unsigned int getPositionKeyframeByTime(Bone* bone);
+    unsigned int getRotationKeyframeByTime(Bone* bone);
+    quat getInterpolatedRotation(Bone* bone);
+    vec3 getInterpolatedPosition(Bone* bone);
+
+public:
+    SkeletalAnimation();
+    SkeletalAnimation(std::string name, ivec2 frames, float speed, int priority = 0);
+
+
+    void applyToBones(bool replaceoldtrans);
+
+    void addPosKeyframe(Bone* bone, PositionKeyframe keyframe);
+    void addRotKeyframe(Bone* bone, RotationKeyframe keyframe);
+
+    void activate(bool active);
+    void removeUnusedKeyframes();
+    
+    //Bone::PositionKeyframe Bone::getPosKeyframe(const unsigned int& index) { return this->vPosKeyframes[index]; }
+    //Bone::RotationKeyframe Bone::getRotKeyframe(const unsigned int& index) { return this->vRotKeyframes[index]; }
+
+    std::string getName();
+
+    void setSpeed(float speed);
 };

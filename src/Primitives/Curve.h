@@ -1,43 +1,47 @@
 #pragma once
 #include <Maths/vec.h>
-#include <vector>
+#include <Essentials/Crate.h>
 #include "UniqueID.h"
 
-class Curve : private std::vector<vec3>, public UniqueID
+class Curve : private crate<vec3>, public UniqueID
 {
 public:
     enum CurveType
     {
         BEZIER_BERNSTEIN,
         BEZIER_CASTELJAU,
+        STRAIGHT
     };
 
 private:
     CurveType iType;
-    std::vector<vec3> vData;
+    crate<vec3> vData;
     unsigned int iResolution;
     unsigned int iIterations;
 
     void bezierCurveByBernstein();
     void bezierCurveByCasteljau();
-    vec3 bezierCurveByCasteljauRec(std::vector<vec3> points, float i);
+    vec3 bezierCurveByCasteljauRec(crate<vec3> points, float i);
 
 public:
     Curve(const CurveType& type);
-    Curve(const std::vector<vec3>& points, const CurveType& type);
+    Curve(const crate<vec3>& points, const CurveType& type);
     ~Curve();
 
-    void addPoint(const vec3& point);
+    void movePoint(const unsigned int& index, const vec3& point);
+    void addPoint(const vec3& point, bool update = true);
     void removePoint(const int& index);
 
-    using std::vector<vec3>::operator[];
+    void updateData();
+
+    using crate<vec3>::operator[];
 
     //Setter
     void setType(const CurveType& type);
 
     //Getter
     CurveType getType() const;
-    std::vector<vec3> getData() const;
-    std::vector<vec3> getControlpoints() const;
+    crate<vec3> getData() const;
+    crate<vec3> getControlpoints() const;
     unsigned int numPoints() const;
 };

@@ -1,27 +1,32 @@
 #pragma once
+#include "Essentials/SerializationData.h"
 #include "Vertex.h"
-#include <vector>
+#include <Essentials/Serialization.h>
+#include <map>
+#include <Essentials/Crate.h>
 #include <string>
 
-
-class Mesh
+class Mesh : public Serialization
 {
+public:
+    static std::map<std::string, Mesh*> mLoadedMeshes;
+
 private:
-    std::vector<Vertex> vVertices;
-    std::vector<unsigned int> vIndices;
+    crate<Vertex> vVertices;
+    crate<unsigned int> vIndices;
 
 public:
     Mesh();
     ~Mesh() {};
 
     mat4 offsetMatrix; //For scene imports
-	bool hasUVs;
-	bool hasNormals;
 	int iMatIndex;
     std::string name;
 
     void addVertex(const Vertex& vertex);
+    void addVertices(const crate<Vertex>& vertices);
     void addIndex(const unsigned int& index);
+    void addIndices(const crate<unsigned int>& indices);
     void addTriangle(const int& a, const int& b, const int& c);
     void addQuad(const int& a, const int& b, const int& c, const int& d);
     void addMesh(Mesh *mesh);
@@ -40,6 +45,8 @@ public:
     unsigned int numIndices() const;
     Vertex& getVertex(const unsigned int& index);
     unsigned int getIndex(const unsigned int& index) const;
-    std::vector<Vertex> getVertexBuffer() const;
-    std::vector<unsigned int> getIndexBuffer() const;
+    crate<Vertex> getVertexBuffer() const;
+    crate<unsigned int> getIndexBuffer() const;
+
+    SerializationData& serialize(SerializationData& data) override;
 };

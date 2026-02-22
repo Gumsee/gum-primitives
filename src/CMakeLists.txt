@@ -7,13 +7,18 @@ file(GLOB_RECURSE SRC
 )
 add_library(${PROJECT_NAME}_trgt STATIC ${SRC})
 
-include_directories(${CMAKE_SOURCE_DIR}/external/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../external/)
 
  
     if(GUMESSENTIALS_FOUND)
             include_directories(${GUMESSENTIALS_INCLUDE_DIRS})
         else()
             message(FATAL_ERROR Library for GUMESSENTIALS cannot not found)
+        endif() 
+    if(GUMSYSTEM_FOUND)
+            include_directories(${GUMSYSTEM_INCLUDE_DIRS})
+        else()
+            message(FATAL_ERROR Library for GUMSYSTEM cannot not found)
         endif() 
     if(GUMMATHS_FOUND)
             include_directories(${GUMMATHS_INCLUDE_DIRS})

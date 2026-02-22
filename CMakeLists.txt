@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 3.0...3.9)
 project(GumPrimitives)
 cmake_policy(SET CMP0072 NEW)
 cmake_policy(SET CMP0090 NEW)
@@ -66,6 +66,10 @@ message(STATUS "${PROJECT_NAME}: CXXFLAGS: ${CMAKE_CXX_FLAGS}")
     
         if(NOT GUMESSENTIALS_FOUND) 
             find_package(GumEssentials REQUIRED)
+        endif() 
+    
+        if(NOT GUMSYSTEM_FOUND) 
+            find_package(GumSystem REQUIRED)
         endif() 
     
         if(NOT GUMMATHS_FOUND) 

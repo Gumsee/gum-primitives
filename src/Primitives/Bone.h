@@ -1,49 +1,32 @@
 #pragma once
 #include "Mesh.h"
-
 #include <string>
-#include <sstream>
-#include <vector>
+#include <Essentials/Crate.h>
 
 class Bone
 {
-private: 
-      mat4 TranformationMatrix;
-      std::string sName;
-      Mesh* mesh;
-      Bone* pParentBone; 
-      mat4 m4OffsetMatrix;
+private:
+    int iID;
+    std::string sName;
+    mat4 m4OffsetMatrix;
+    mat4 mTranformationMatrix;
 
-      std::vector<vec3> PosKeys;
-      std::vector<quat> RotKeys;
-      std::vector<float> Times;
-      std::vector<Bone*> vChildren;
-
-      unsigned int iID;
-
-      void setParent(Bone* bone);
+    Bone* pParentBone;
+    crate<Bone*> vChildren;
 
 public:
-      Bone(Mesh* in_mesh, unsigned int in_id, std::string in_name, mat4 in_o_mat, mat4 transform);
+    Bone(int id, std::string name, mat4 offsetmatrix);
 
-      void UpdateKeyframeTransform(float time);
+    void updateTransform(mat4 transform);
 
-      unsigned int FindPosition(float time);
-      unsigned int FindRotation(float time);
+    void addChild(Bone* bone);
+    std::string hierarchyString(const unsigned int& level = 0);
 
-      quat CalcInterpolatedRotation(float time);
-      vec3 CalcInterpolatedPosition(float time);
-
-      void addChild(Bone* bone);
-
-      void setTransform(mat4 trans);
-
-      Bone* getParent();
-      Bone* getChild(int index);
-      unsigned int numChildren();
-      mat4 getOffsetMatrix();
-      mat4 getTransform();
-      std::string getName();
-      unsigned int getID();
-      std::string hierarchyString(unsigned int level);
+    Bone* getParent();
+    Bone* getChild(const unsigned int& index);
+    mat4 getOffsetMatrix();
+    mat4 getTransform();
+    std::string getName();
+    int getID();
+    unsigned int numChildren();
 };

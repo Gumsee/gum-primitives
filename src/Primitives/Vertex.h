@@ -1,15 +1,17 @@
 #pragma once
+#include "Essentials/SerializationData.h"
 #include <gum-maths.h>
+#include <Essentials/Serialization.h>
 
-struct Vertex
+struct Vertex : public Serialization
 {
     vec3 position;
     vec2 textureCoord;
     vec3 normal, tangent, bitangent;
 
     //Skeletal (bone info)
-    ivec3 JointIDs;
-    vec3 Weights;
+    ivec4 JointIDs;
+    vec4 Weights;
     int BaseVertex;
 
 
@@ -20,13 +22,13 @@ struct Vertex
         this->normal = vec3(0,0,0);
         this->tangent = vec3(0,0,0);
         this->bitangent = vec3(0,0,0);
-        this->JointIDs = vec3(0,0,0);
-        this->Weights = vec3(0,0,0);
+        this->JointIDs = ivec4(-1,-1,-1,-1);
+        this->Weights = vec4(0,0,0,0);
         this->BaseVertex = 0;
     }
 
     
-    Vertex(vec3 pos, vec2 textureCoord, vec3 normal, vec3 tangent, vec3 bitangent, ivec3 jointIDs, vec3 weights, int basevertex)
+    Vertex(vec3 pos, vec2 textureCoord = vec2(0,0), vec3 normal = vec3(0,0,0), vec3 tangent = vec3(0,0,0), vec3 bitangent = vec3(0,0,0), ivec4 jointIDs = ivec4(-1,-1,-1,-1), vec4 weights = vec4(0,0,0,0), int basevertex = 0)
     {
         this->position = pos;
         this->textureCoord = textureCoord;
@@ -37,33 +39,6 @@ struct Vertex
         this->Weights = weights;
         this->BaseVertex = basevertex;
     }
-    
-
-    Vertex(vec3 pos, vec2 textureCoord, vec3 normal, vec3 tangent) 
-    {
-        this->position = pos;
-        this->textureCoord = textureCoord;
-        this->normal = normal;
-        this->tangent = tangent;
-        this->bitangent = vec3(0,0,0);
-        this->JointIDs = vec3(0,0,0);
-        this->Weights = vec3(0,0,0);
-        this->BaseVertex = 0;
-    }
-
-
-    Vertex(vec3 pos, vec2 textureCoord, vec3 normal) 
-    {
-        this->position = pos;
-        this->textureCoord = textureCoord;
-        this->normal = normal;
-        this->tangent = vec3(0,0,0);
-        this->bitangent = vec3(0,0,0);
-        this->JointIDs = vec3(0,0,0);
-        this->Weights = vec3(0,0,0);
-        this->BaseVertex = 0;
-    }
-
 
     std::string toString(std::string vec3Prefix = "", std::string vec2Prefix = "")
     {
@@ -77,5 +52,10 @@ struct Vertex
             Weights.toString(vec3Prefix)              + ", " +
             std::to_string(BaseVertex)                +
         ")";
+    }
+
+    SerializationData& serialize(SerializationData& data) override
+    {
+        return data & position & textureCoord & normal & tangent & JointIDs & Weights & BaseVertex;
     }
 };
