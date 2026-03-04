@@ -20,7 +20,7 @@ Mesh* Mesh::generateSphere(float radius, unsigned int slices, unsigned int stack
     float stackStep = PI / stacks;
     float sectorAngle, stackAngle;
 
-    for(int i = 0; i <= stacks; ++i)
+    for(unsigned int i = 0; i <= stacks; ++i)
     {
         stackAngle = PI / 2 - i * stackStep;        // starting from pi/2 to -pi/2
         xy = radius * cosf(stackAngle);             // r * cos(u)
@@ -28,29 +28,35 @@ Mesh* Mesh::generateSphere(float radius, unsigned int slices, unsigned int stack
 
         // add (sectorCount+1) vertices per stack
         // first and last vertices have same position and normal, but different tex coords
-        for(int j = 0; j <= slices; ++j)
+        for(unsigned int j = 0; j <= slices; ++j)
         {
             sectorAngle = j * sectorStep;           // starting from 0 to 2pi
 
             // vertex position
+            #ifdef GUM_PRIMITIVES_MESH_UP_Z
             vec3 position(xy * cosf(sectorAngle), xy * sinf(sectorAngle), z);
+            vec3 tangent(-xy * sinf(sectorAngle), 0, xy * cosf(sectorAngle));
+            #else
+            vec3 position(xy * sinf(sectorAngle), z, xy * cosf(sectorAngle));
+            vec3 tangent(-xy * cosf(sectorAngle), 0, xy * sinf(sectorAngle));
+            #endif
 
             // normalized vertex normal
             vec3 normal(position * lengthInv);
 
             // vertex tex coord range between [0, 1]
-            vec2 texcoords((float)j / slices, (float)i / stacks);
-            mesh->addVertex(Vertex(position, texcoords, normal));
+            vec2 texcoords((float)i / slices, (float)j / stacks);
+            mesh->addVertex(Vertex(position, texcoords, normal, tangent));
         }
     }
 
-    int k1, k2;
-    for(int i = 0; i < stacks; ++i)
+    unsigned int k1, k2;
+    for(unsigned int i = 0; i < stacks; ++i)
     {
         k1 = i * (slices + 1);     // beginning of current stack
         k2 = k1 + slices + 1;      // beginning of next stack
 
-        for(int j = 0; j < slices; ++j, ++k1, ++k2)
+        for(unsigned int j = 0; j < slices; ++j, ++k1, ++k2)
         {
             // 2 triangles per sector excluding first and last stacks
             // k1 => k2 => k1+1
