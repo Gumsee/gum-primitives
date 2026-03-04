@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.0...3.9)
+cmake_minimum_required (VERSION 4.0)
 project(GumPrimitives)
 cmake_policy(SET CMP0072 NEW)
 cmake_policy(SET CMP0090 NEW)
@@ -64,17 +64,17 @@ message(STATUS "${PROJECT_NAME}: CXXFLAGS: ${CMAKE_CXX_FLAGS}")
 
  
     
-        if(NOT GUMESSENTIALS_FOUND) 
-            find_package(GumEssentials REQUIRED)
-        endif() 
-    
-        if(NOT GUMSYSTEM_FOUND) 
-            find_package(GumSystem REQUIRED)
-        endif() 
-    
-        if(NOT GUMMATHS_FOUND) 
-            find_package(GumMaths REQUIRED)
-        endif()
+if(NOT GUMESSENTIALS_FOUND) 
+    find_package(GumEssentials REQUIRED)
+endif() 
+
+if(NOT GUMSYSTEM_FOUND) 
+    find_package(GumSystem REQUIRED)
+endif() 
+
+if(NOT GUMMATHS_FOUND) 
+    find_package(GumMaths REQUIRED)
+endif()
 
 #add_definitions(-DDEBUG)
 add_definitions(-DCHECK_GL_ERRORS)
@@ -84,5 +84,5 @@ add_definitions(-DCHECK_GL_ERRORS)
 add_subdirectory(src)
 if(GUMPRIMITIVES_BUILD_EXAMPLES)
     add_subdirectory(examples)
-    endif()
+endif()
     

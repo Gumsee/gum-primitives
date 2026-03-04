@@ -17,7 +17,7 @@ private:
 
 public:
     Mesh();
-    ~Mesh() {};
+    virtual ~Mesh() {};
 
     mat4 offsetMatrix; //For scene imports
 	int iMatIndex;
@@ -32,11 +32,14 @@ public:
     void addMesh(Mesh *mesh);
 
     //Static methods
-    static Mesh* generateUVSphere(const int& parallels, const int& meridians);
+    //static Mesh* generateUVSphere(const int& parallels, const int& meridians);
+    static Mesh* generateSphere(float radius, unsigned int slices, unsigned int stacks);
     static Mesh* generateCube(const vec3& dimensions);
     static Mesh* generatePlane(const vec2& dimensions);
     static Mesh* generateCircle(const vec2& dimensions, const unsigned int& resolution = 32);
     static Mesh* generateArc(const vec2& dimensions, const double& angle, const unsigned int& resolution = 32);
+    static Mesh* generateCapsule(float radius, float height, unsigned int slices = 16, unsigned int stacks = 17);
+    static Mesh* generateCylinder(float radius, float height, unsigned int slices);
 
 	void writeMeshInfoToFile(std::string filename);
 
