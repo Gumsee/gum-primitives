@@ -33,8 +33,11 @@ public:
 
     //Static methods
     //static Mesh* generateUVSphere(const int& parallels, const int& meridians);
+    static Mesh* generateLine(const vec3& start, const vec3& end);
+    static Mesh* generateDisk(const float& inner, const float& outer, const unsigned int& slices);
     static Mesh* generateSphere(float radius, unsigned int slices, unsigned int stacks);
     static Mesh* generateCube(const vec3& dimensions);
+    static Mesh* generatePyramid(const vec2& footprint, const float& height);
     static Mesh* generatePlane(const vec2& dimensions);
     static Mesh* generateCircle(const vec2& dimensions, const unsigned int& resolution = 32);
     static Mesh* generateArc(const vec2& dimensions, const double& angle, const unsigned int& resolution = 32);

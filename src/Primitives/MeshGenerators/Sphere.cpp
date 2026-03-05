@@ -36,16 +36,20 @@ Mesh* Mesh::generateSphere(float radius, unsigned int slices, unsigned int stack
             #ifdef GUM_PRIMITIVES_MESH_UP_Z
             vec3 position(xy * cosf(sectorAngle), xy * sinf(sectorAngle), z);
             vec3 tangent(-xy * sinf(sectorAngle), 0, xy * cosf(sectorAngle));
+
+            // vertex tex coord range between [0, 1]
+            vec2 texcoords((float)j / slices, (float)i / stacks);
             #else
             vec3 position(xy * sinf(sectorAngle), z, xy * cosf(sectorAngle));
             vec3 tangent(-xy * cosf(sectorAngle), 0, xy * sinf(sectorAngle));
+
+            // vertex tex coord range between [0, 1]
+            vec2 texcoords((float)i / slices, (float)j / stacks);
             #endif
 
             // normalized vertex normal
             vec3 normal(position * lengthInv);
 
-            // vertex tex coord range between [0, 1]
-            vec2 texcoords((float)i / slices, (float)j / stacks);
             mesh->addVertex(Vertex(position, texcoords, normal, tangent));
         }
     }

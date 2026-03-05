@@ -78,6 +78,7 @@ message(STATUS "${PROJECT_NAME}: CXXFLAGS: ${CMAKE_CXX_FLAGS}")
 
 #add_definitions(-DDEBUG)
 add_definitions(-DCHECK_GL_ERRORS)
+add_definitions(-DGUM_PRIMITIVES_MESH_UP_Z)
 
 
 
