@@ -11,11 +11,10 @@ Mesh* Mesh::generateCapsule(float radius, float height, unsigned int slices, uns
       return nullptr;
 
     std::string name = "INTERNAL_CAPSULE_" + std::to_string(radius) + "_" + std::to_string(height) + "_" + std::to_string(slices) + "_" + std::to_string(stacks);
-    if(Tools::mapHasKey(mLoadedMeshes, std::string(name)))
+    if(Tools::mapHasKey(mLoadedMeshes, name))
         return mLoadedMeshes[name];
 
-    Mesh* mesh = new Mesh();
-    mesh->name = name;
+    Mesh* mesh = new Mesh(name);
 
     #ifdef GUM_PRIMITIVES_MESH_UP_Z
     mesh->vVertices.push_back(Vertex(vec3(0.f, 0.f, -height * 0.5f), vec2(0, 0), vec3(0.f, 0.f, -1.f)));
@@ -75,6 +74,5 @@ Mesh* Mesh::generateCapsule(float radius, float height, unsigned int slices, uns
       mesh->vIndices.push_back(((i + 1) % slices) + (stacks - 2) * slices + 1);
     }
 
-    mLoadedMeshes[name] = mesh;
     return mesh;
 }

@@ -7,8 +7,7 @@ Mesh* Mesh::generateArc(const vec2& dimensions, const double& angle, const unsig
     if(Tools::mapHasKey(mLoadedMeshes, name))
         return mLoadedMeshes[name];
 
-    Mesh* mesh = new Mesh();
-    mesh->name = name;
+    Mesh* mesh = new Mesh(name);
 
     double stepsize = angle / (double)resolution;
     for(double i = 0; i < angle; i += stepsize)
@@ -22,7 +21,6 @@ Mesh* Mesh::generateArc(const vec2& dimensions, const double& angle, const unsig
         mesh->addVertex(vert);
     }
 
-    mLoadedMeshes[name] = mesh;
     return mesh;
 }
 

@@ -8,11 +8,10 @@ Mesh* Mesh::generateDisk(const float& inner, const float& outer, const unsigned 
     return nullptr;
 
   std::string name = "INTERNAL_DISC_" + std::to_string(inner) + "_" + std::to_string(outer) + "_" + std::to_string(slices);
-  if(Tools::mapHasKey(mLoadedMeshes, std::string(name)))
+  if(Tools::mapHasKey(mLoadedMeshes, name))
       return mLoadedMeshes[name];
 
-  Mesh* mesh = new Mesh();
-  mesh->name = name;
+  Mesh* mesh = new Mesh(name);
 
   
   for(unsigned int i = 0; i < slices; ++i)
@@ -42,6 +41,5 @@ Mesh* Mesh::generateDisk(const float& inner, const float& outer, const unsigned 
     }
   }
 
-  mLoadedMeshes[name] = mesh;
 	return mesh;
 }

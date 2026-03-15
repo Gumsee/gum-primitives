@@ -40,6 +40,8 @@ struct Vertex : public Serialization
         this->BaseVertex = basevertex;
     }
 
+    virtual ~Vertex() {}
+
     std::string toString(std::string vec3Prefix = "", std::string vec2Prefix = "")
     {
         return "Vertex(" + 

@@ -7,11 +7,10 @@ Mesh* Mesh::generateSphere(float radius, unsigned int slices, unsigned int stack
       return nullptr;
 
     std::string name = "INTERNAL_SPHERE_" + std::to_string(radius) + "_" + std::to_string(slices) + "_" + std::to_string(stacks);
-    if(Tools::mapHasKey(mLoadedMeshes, std::string(name)))
+    if(Tools::mapHasKey(mLoadedMeshes, name))
         return mLoadedMeshes[name];
 
-    Mesh* mesh = new Mesh();
-    mesh->name = name;
+    Mesh* mesh = new Mesh(name);
     
     float z, xy;                     // vertex position
     float lengthInv = 1.0f / radius; // vertex normal
@@ -72,9 +71,7 @@ Mesh* Mesh::generateSphere(float radius, unsigned int slices, unsigned int stack
               mesh->addTriangle(k1+1, k2, k2+1);
         }
     }
-
-
-    mLoadedMeshes[name] = mesh;
+    
     return mesh;
 }
 

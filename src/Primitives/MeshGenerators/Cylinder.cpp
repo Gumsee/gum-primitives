@@ -7,11 +7,10 @@ Mesh* Mesh::generateCylinder(float radius, float height, unsigned int slices)
     return nullptr;
 
   std::string name = "INTERNAL_CYLINDER_" + std::to_string(radius) + "_" + std::to_string(height) + "_" + std::to_string(slices);
-  if(Tools::mapHasKey(mLoadedMeshes, std::string(name)))
+  if(Tools::mapHasKey(mLoadedMeshes, name))
       return mLoadedMeshes[name];
 
-  Mesh* mesh = new Mesh();
-  mesh->name = name;
+  Mesh* mesh = new Mesh(name);
 
   mesh->addVertex(Vertex(vec3(0.f, 0.f, -height * 0.5f), vec2(0,0), vec3(0.f, 0.f, -1.f)));
   for(unsigned int i = 0; i < slices; ++i)
@@ -55,6 +54,5 @@ Mesh* Mesh::generateCylinder(float radius, float height, unsigned int slices)
     mesh->addIndex(i + 3 * slices + 1);
   }
 
-  mLoadedMeshes[name] = mesh;
   return mesh;
 }

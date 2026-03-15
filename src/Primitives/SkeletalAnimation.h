@@ -18,10 +18,10 @@ public:
 
     struct RotationKeyframe
     {
-        quat rot;
+        fquat rot;
         float time;
 
-        RotationKeyframe(quat rot, float time)
+        RotationKeyframe(fquat rot, float time)
             : rot(rot), time(time) {}
     };
 
@@ -39,7 +39,7 @@ private:
 
     unsigned int getPositionKeyframeByTime(Bone* bone);
     unsigned int getRotationKeyframeByTime(Bone* bone);
-    quat getInterpolatedRotation(Bone* bone);
+    fquat getInterpolatedRotation(Bone* bone);
     vec3 getInterpolatedPosition(Bone* bone);
 
 public:

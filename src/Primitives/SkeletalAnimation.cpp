@@ -48,7 +48,7 @@ vec3 SkeletalAnimation::getInterpolatedPosition(Bone* bone)
 }
 
 
-quat SkeletalAnimation::getInterpolatedRotation(Bone* bone)
+fquat SkeletalAnimation::getInterpolatedRotation(Bone* bone)
 {
     if(mRotKeyframes[bone].size() == 1)
         return mRotKeyframes[bone][0].rot;
@@ -59,11 +59,11 @@ quat SkeletalAnimation::getInterpolatedRotation(Bone* bone)
     float DeltaTime = mRotKeyframes[bone][NextRotationIndex].time - mRotKeyframes[bone][RotationIndex].time;
     float factor = (fCurrentTime - mRotKeyframes[bone][RotationIndex].time) / DeltaTime;
 
-    const quat start = mRotKeyframes[bone][RotationIndex].rot;
-    const quat end = mRotKeyframes[bone][NextRotationIndex].rot;
+    const fquat start = mRotKeyframes[bone][RotationIndex].rot;
+    const fquat end = mRotKeyframes[bone][NextRotationIndex].rot;
 
     //std::cout << bone->getName() << " " << RotationIndex << std::endl;
-    return quat::slerp(start, end, factor);
+    return fquat::slerp(start, end, factor);
 }
 
 void SkeletalAnimation::applyToBones(bool replaceoldtrans)

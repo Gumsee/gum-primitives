@@ -1,16 +1,25 @@
 #include "Mesh.h"
 #include <fstream>
 #include <string>
+#include "Essentials/Tools.h"
+#include <assert.h>
 
-std::map<std::string, Mesh*> Mesh::mLoadedMeshes {};
-
-Mesh::Mesh() 
+Mesh::Mesh(std::string name)
+  : name(name)
 {
     offsetMatrix = mat4(1);
-    
     iMatIndex = -1;
-    name = "";
+
+    assert(!name.empty());
+
+    mLoadedMeshes[name] = this;
 };
+
+Mesh::~Mesh()
+{
+    if(Tools::mapHasKey(mLoadedMeshes, name))
+        mLoadedMeshes.erase(name);
+}
 
 
 void Mesh::addVertex(const Vertex& vertex)
@@ -108,4 +117,10 @@ crate<unsigned int> Mesh::getIndexBuffer() const       { return this->vIndices; 
 SerializationData& Mesh::serialize(SerializationData& data)
 {
     return data & name & vVertices & vIndices;
+}
+
+void Mesh::destroyAllMeshes()
+{
+    while(mLoadedMeshes.size() > 0)
+        Gum::_delete(mLoadedMeshes.begin()->second);
 }

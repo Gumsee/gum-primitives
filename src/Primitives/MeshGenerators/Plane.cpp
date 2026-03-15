@@ -7,8 +7,7 @@ Mesh* Mesh::generatePlane(const vec2& dimensions)
     if(Tools::mapHasKey(mLoadedMeshes, name))
         return mLoadedMeshes[name];
 
-    Mesh* mesh = new Mesh();
-    mesh->name = name;
+    Mesh* mesh = new Mesh(name);
     mesh->vVertices = { 
         Vertex(vec3( dimensions.x, 0.0f,  dimensions.y), vec2(1, 1), vec3(0, 1, 0), vec3(1, 0, 0), vec3(0, 0, 1), ivec3(0, 0, 0), vec3(0, 0, 0), 0), 
         Vertex(vec3( dimensions.x, 0.0f, -dimensions.y), vec2(1, 0), vec3(0, 1, 0), vec3(1, 0, 0), vec3(0, 0, 1), ivec3(0, 0, 0), vec3(0, 0, 0), 0), 
@@ -17,6 +16,5 @@ Mesh* Mesh::generatePlane(const vec2& dimensions)
     };
     mesh->vIndices = {0, 1, 2, 1, 3, 2};
 
-    mLoadedMeshes[name] = mesh;
 	return mesh;
 }

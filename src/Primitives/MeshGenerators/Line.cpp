@@ -7,12 +7,10 @@ Mesh* Mesh::generateLine(const vec3& start, const vec3& end)
     if(Tools::mapHasKey(mLoadedMeshes, name))
         return mLoadedMeshes[name];
 
-    Mesh* mesh = new Mesh();
-    mesh->name = name;
+    Mesh* mesh = new Mesh(name);
     mesh->addVertex(Vertex(start, vec2(0,0), vec3(0.f, 0.f, 1.f)));
     mesh->addVertex(Vertex(end, vec2(0,0), vec3(0.f, 0.f, 1.f)));
   
 
-  mLoadedMeshes[name] = mesh;
   return mesh;
 }

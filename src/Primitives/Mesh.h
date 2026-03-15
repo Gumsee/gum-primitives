@@ -9,15 +9,15 @@
 class Mesh : public Serialization
 {
 public:
-    static std::map<std::string, Mesh*> mLoadedMeshes;
+    inline static std::map<std::string, Mesh*> mLoadedMeshes;
 
 private:
     crate<Vertex> vVertices;
     crate<unsigned int> vIndices;
 
 public:
-    Mesh();
-    virtual ~Mesh() {};
+    Mesh(std::string name);
+    virtual ~Mesh();
 
     mat4 offsetMatrix; //For scene imports
 	int iMatIndex;
@@ -55,4 +55,6 @@ public:
     crate<unsigned int> getIndexBuffer() const;
 
     SerializationData& serialize(SerializationData& data) override;
+
+    static void destroyAllMeshes();
 };
