@@ -6,9 +6,9 @@
 //static float F3(float u) { return powf(u, 3.0f) - 2.0f*powf(u, 2.0f) + u; }
 //static float F4(float u) { return powf(u, 3.0f) - powf(u, 2.0f); }
 
-static float polynomBernstein(double m, double i, double u)
+static float polynomBernstein(int m, int i, float u)
 { 
-    return Gum::Maths::binomialCoeff((float)m, (float)i)*powf((float)u, (float)i)*powf(1.0f-(float)u, (float)m-(float)i); 
+    return (float)Gum::Maths::binomialCoeff(m, i) * powf(u, (float)i) * powf(1.0f - u, (float)m - (float)i); 
 }
 	
 
@@ -55,13 +55,13 @@ void Curve::bezierCurveByBernstein()
     vData.clear();
     float etape = (float)iIterations;
     float nbU = (float)iResolution;
-    double n = (double)size() - 1.0;
+    int n = (int)size() - 1;
 
     if(etape > nbU * (float)size()) 
         etape = nbU;
 
     
-    for(double i = 0.0; i <= etape / nbU; i += 1.0 / nbU)
+    for(float i = 0.0; i <= etape / nbU; i += 1.0f / nbU)
     {
         vec3 p;
         for(int j = 0; j <= n; ++j)

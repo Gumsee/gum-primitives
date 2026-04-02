@@ -25,12 +25,12 @@ Mesh* Mesh::generateCapsule(float radius, float height, unsigned int slices, uns
     for(unsigned int i = 1; i < stacks; ++i)
     {
       const bool lowerPart = i <= stacks / 2;
-      const float z = -radius * std::cos(static_cast<float>(lowerPart ? i : i - 1) * GUM_PI / (stacks - 1));
-      const float r = radius * std::sin(static_cast<float>(lowerPart ? i : i - 1) * GUM_PI / (stacks - 1));
+      const float z = -radius * std::cos(static_cast<float>(lowerPart ? i : i - 1) * GUM_PI_F / (stacks - 1));
+      const float r = radius * std::sin(static_cast<float>(lowerPart ? i : i - 1) * GUM_PI_F / (stacks - 1));
       for(unsigned int j = 0; j < slices; ++j)
       {
-        const float x = r * std::cos(static_cast<float>(j) * 2.f * GUM_PI / slices);
-        const float y = r * std::sin(static_cast<float>(j) * 2.f * GUM_PI / slices);
+        const float x = r * std::cos(static_cast<float>(j) * 2.f * GUM_PI_F / slices);
+        const float y = r * std::sin(static_cast<float>(j) * 2.f * GUM_PI_F / slices);
         #ifdef GUM_PRIMITIVES_MESH_UP_Z
         vec3 position(x, y, z);
         position.z += (lowerPart ? -cylinderHeight : cylinderHeight) * 0.5f;

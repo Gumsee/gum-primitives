@@ -40,7 +40,7 @@ public:
     static Mesh* generatePyramid(const vec2& footprint, const float& height);
     static Mesh* generatePlane(const vec2& dimensions);
     static Mesh* generateCircle(const vec2& dimensions, const unsigned int& resolution = 32);
-    static Mesh* generateArc(const vec2& dimensions, const double& angle, const unsigned int& resolution = 32);
+    static Mesh* generateArc(const vec2& dimensions, const float& angle, const unsigned int& resolution = 32);
     static Mesh* generateCapsule(float radius, float height, unsigned int slices = 16, unsigned int stacks = 17);
     static Mesh* generateCylinder(float radius, float height, unsigned int slices);
 

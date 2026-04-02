@@ -28,9 +28,9 @@ public:
 private:
     std::string sName;
     float fSpeed;
-    float fCurrentTime;
     float fStartTime;
     float fEndTime;
+    float fCurrentTime;
     int iPriority;
     bool bIsActive;
 
@@ -47,7 +47,7 @@ public:
     SkeletalAnimation(std::string name, ivec2 frames, float speed, int priority = 0);
 
 
-    void applyToBones(bool replaceoldtrans);
+    void applyToBones();
 
     void addPosKeyframe(Bone* bone, PositionKeyframe keyframe);
     void addRotKeyframe(Bone* bone, RotationKeyframe keyframe);
@@ -59,6 +59,7 @@ public:
     //Bone::RotationKeyframe Bone::getRotKeyframe(const unsigned int& index) { return this->vRotKeyframes[index]; }
 
     std::string getName();
+    int getPriority();
 
     void setSpeed(float speed);
 };

@@ -48,4 +48,4 @@ mat4 Bone::getTransform()                                              { return 
 int Bone::getID()                                                      { return this->iID; }
 Bone* Bone::getChild(const unsigned int& index)                        { return this->vChildren[index]; }
 std::string Bone::getName()                                            { return this->sName; }
-unsigned int Bone::numChildren()                                       { return this->vChildren.size(); }
+unsigned int Bone::numChildren()                                       { return (unsigned int)this->vChildren.size(); }

@@ -15,13 +15,13 @@ Mesh* Mesh::generateSphere(float radius, unsigned int slices, unsigned int stack
     float z, xy;                     // vertex position
     float lengthInv = 1.0f / radius; // vertex normal
 
-    float sectorStep = 2 * PI / slices;
-    float stackStep = PI / stacks;
+    float sectorStep = 2 * GUM_PI_F / slices;
+    float stackStep = GUM_PI_F / stacks;
     float sectorAngle, stackAngle;
 
     for(unsigned int i = 0; i <= stacks; ++i)
     {
-        stackAngle = PI / 2 - i * stackStep;        // starting from pi/2 to -pi/2
+        stackAngle = GUM_PI_F / 2 - i * stackStep;        // starting from pi/2 to -pi/2
         xy = radius * cosf(stackAngle);             // r * cos(u)
         z = radius * sinf(stackAngle);              // r * sin(u)
 
@@ -91,12 +91,12 @@ Mesh* Mesh::generateSphere(float radius, unsigned int slices, unsigned int stack
     #endif
 	for (int j = 0; j < parallels - 1; ++j)
 	{
-		double const polar = M_PI * double(j+1) / double(parallels);
+		double const polar = GUM_PI_F * double(j+1) / double(parallels);
 		double const sp = std::sin(polar);
 		double const cp = std::cos(polar);
 		for (int i = 0; i < meridians; ++i)
 		{
-			double const azimuth = 2.0 * M_PI * double(i) / double(meridians);
+			double const azimuth = 2.0 * GUM_PI_F * double(i) / double(meridians);
 			double const sa = std::sin(azimuth);
 			double const ca = std::cos(azimuth);
 			double const x = sp * ca;

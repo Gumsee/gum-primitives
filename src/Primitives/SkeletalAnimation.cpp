@@ -3,12 +3,12 @@
 #include <Essentials/Time.h>
 
 
-SkeletalAnimation::SkeletalAnimation() : SkeletalAnimation("", ivec2(0,0), 0, 0) {}
+SkeletalAnimation::SkeletalAnimation() : SkeletalAnimation("", ivec2(0, 0), 0, 0) {}
 SkeletalAnimation::SkeletalAnimation(std::string name, ivec2 frames, float speed, int priority)
     : sName(name),
+      fSpeed(speed),
       fStartTime(frames.x),
       fEndTime(frames.y),
-      fSpeed(speed),
       iPriority(priority),
       bIsActive(false)
 {}
@@ -66,7 +66,7 @@ fquat SkeletalAnimation::getInterpolatedRotation(Bone* bone)
     return fquat::slerp(start, end, factor);
 }
 
-void SkeletalAnimation::applyToBones(bool replaceoldtrans)
+void SkeletalAnimation::applyToBones()
 {
     if(!bIsActive)
         return;
@@ -130,5 +130,6 @@ void SkeletalAnimation::activate(bool active)
 }
 
 std::string SkeletalAnimation::getName() { return this->sName; }
+int SkeletalAnimation::getPriority()     { return this->iPriority; }
 
 void SkeletalAnimation::setSpeed(float speed) { this->fSpeed = speed; }

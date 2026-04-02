@@ -63,7 +63,7 @@ void Mesh::addQuad(const int& a, const int& b, const int& c, const int& d)
 
 void Mesh::addMesh(Mesh *mesh)
 {
-    int IndexOffset = this->vVertices.size();
+    int IndexOffset = (int)this->vVertices.size();
     for(size_t i = 0; i < mesh->vVertices.size(); i++)
     {
         this->vVertices.push_back(mesh->vVertices[i]);
@@ -87,10 +87,10 @@ void Mesh::writeMeshInfoToFile(std::string filename)  //Move to fileparser
 
 	//Vertex Info
 	std::string verticesString;
-	for(size_t i = 0; i < numVertices(); i++) { verticesString += getVertex(i).toString("vec3(", "vec2(") + ", \n"; };
+	for(unsigned int i = 0; i < numVertices(); i++) { verticesString += getVertex(i).toString("vec3(", "vec2(") + ", \n"; };
 
 	std::string indicesString;
-	for(size_t i = 0; i < numIndices(); i++) { indicesString += std::to_string(getIndex(i)) + ", "; };
+	for(unsigned int i = 0; i < numIndices(); i++) { indicesString += std::to_string(getIndex(i)) + ", "; };
 	
 	file << "\n//Vertices Information\n";
 	file << "crate<Vertex> vertices = { \n" << verticesString << "};\n";
@@ -106,12 +106,12 @@ void Mesh::writeMeshInfoToFile(std::string filename)  //Move to fileparser
 
 
 //Getters
-unsigned int Mesh::numVertices() const                       { return this->vVertices.size(); }
-unsigned int Mesh::numIndices() const                        { return this->vIndices.size(); }
+unsigned int Mesh::numVertices() const                       { return (unsigned int)this->vVertices.size(); }
+unsigned int Mesh::numIndices() const                        { return (unsigned int)this->vIndices.size(); }
 Vertex& Mesh::getVertex(const unsigned int& index)           { return this->vVertices[index]; }
 unsigned int Mesh::getIndex(const unsigned int& index) const { return this->vIndices[index]; }
-crate<Vertex> Mesh::getVertexBuffer() const            { return this->vVertices; }
-crate<unsigned int> Mesh::getIndexBuffer() const       { return this->vIndices; }
+crate<Vertex> Mesh::getVertexBuffer() const                  { return this->vVertices; }
+crate<unsigned int> Mesh::getIndexBuffer() const             { return this->vIndices; }
 
 
 SerializationData& Mesh::serialize(SerializationData& data)
