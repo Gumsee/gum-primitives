@@ -26,5 +26,5 @@ Mesh* Mesh::generateArc(const vec2& dimensions, const float& angle, const unsign
 
 Mesh* Mesh::generateCircle(const vec2& dimensions, const unsigned int& resolution)
 {
-    return generateArc(dimensions, 360.0, resolution);
+  return generateArc(dimensions, 360.0, resolution);
 }

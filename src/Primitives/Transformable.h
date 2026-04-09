@@ -27,13 +27,14 @@ public:
       : vScale(VectorType(1.0f)) {}
     
     virtual void onTransformUpdate() {};
-    virtual void updateMatrix()
+    virtual void updateMatrix(bool callonupdate = true)
     {
         if constexpr (!std::is_pointer<T>::value)
             mTransformation = Gum::Maths::createTransformationMatrix(vPosition, qRotation, vScale);
         else
             mTransformation = Gum::Maths::createTransformationMatrix(TRANSFORMABLE_VECTOR_TRANSLATION, TRANSFORMABLE_ROTATION_TRANSLATION, vScale);
-        onTransformUpdate();
+        if(callonupdate)
+          onTransformUpdate();
     }
     
 
@@ -74,7 +75,7 @@ public:
 	virtual VectorTypeInternal getInternalPosition() const   { return this->vPosition; }
 	virtual RotationTypeInternal getInternalRotation() const { return this->qRotation; }
 	virtual VectorType& getScale()                      { return this->vScale; }
-	virtual MatrixType& getMatrix()                     { return this->mTransformation; }
+	virtual MatrixType& getMatrix()               { return this->mTransformation; }
 };
 
 typedef Transformable<float, 2> Transformable2D;

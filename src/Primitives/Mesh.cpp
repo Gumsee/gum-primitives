@@ -7,71 +7,69 @@
 Mesh::Mesh(std::string name)
   : name(name)
 {
-    offsetMatrix = mat4(1);
-    iMatIndex = -1;
+  offsetMatrix = mat4(1);
+  iMatIndex = -1;
 
-    assert(!name.empty());
+  assert(!name.empty());
 
-    mLoadedMeshes[name] = this;
+  mLoadedMeshes[name] = this;
 };
 
 Mesh::~Mesh()
 {
-    if(Tools::mapHasKey(mLoadedMeshes, name))
-        mLoadedMeshes.erase(name);
+  std::cout << "deleting " << name << std::endl;
+  if(Tools::mapHasKey(mLoadedMeshes, name))
+    mLoadedMeshes.erase(name);
 }
 
 
 void Mesh::addVertex(const Vertex& vertex)
 {
-    this->vVertices.push_back(vertex);
+  this->vVertices.push_back(vertex);
 }
 
 void Mesh::addIndex(const unsigned int& index)
 {
-    this->vIndices.push_back(index);
+  this->vIndices.push_back(index);
 }
 
 void Mesh::addVertices(const crate<Vertex>& vertices)
 {
-    for(size_t i = 0; i < vertices.size(); i++)
-        addVertex(vertices[i]);
+  for(size_t i = 0; i < vertices.size(); i++)
+    addVertex(vertices[i]);
 }
 
 void Mesh::addIndices(const crate<unsigned int>& indices)
 {
-    for(size_t i = 0; i < indices.size(); i++)
-        addIndex(indices[i]);
+  for(size_t i = 0; i < indices.size(); i++)
+    addIndex(indices[i]);
 }
 
 void Mesh::addTriangle(const int& a, const int& b, const int& c)
 {
-    vIndices.push_back(a);
-    vIndices.push_back(b);
-    vIndices.push_back(c);
+  vIndices.push_back(a);
+  vIndices.push_back(b);
+  vIndices.push_back(c);
 }
 
 void Mesh::addQuad(const int& a, const int& b, const int& c, const int& d)
 {
-    vIndices.push_back(a);
-    vIndices.push_back(b);
-    vIndices.push_back(c);
-    vIndices.push_back(a);
-    vIndices.push_back(c);
-    vIndices.push_back(d);
+  vIndices.push_back(a);
+  vIndices.push_back(b);
+  vIndices.push_back(c);
+  vIndices.push_back(a);
+  vIndices.push_back(c);
+  vIndices.push_back(d);
 }
 
 void Mesh::addMesh(Mesh *mesh)
 {
-    int IndexOffset = (int)this->vVertices.size();
-    for(size_t i = 0; i < mesh->vVertices.size(); i++)
-    {
-        this->vVertices.push_back(mesh->vVertices[i]);
-    }
-    for(size_t i = 0; i < mesh->vIndices.size(); i++)
-    {
-        this->vIndices.push_back(mesh->vIndices[i] + IndexOffset);
-    }
+  int IndexOffset = (int)this->vVertices.size();
+  for(size_t i = 0; i < mesh->vVertices.size(); i++)
+    this->vVertices.push_back(mesh->vVertices[i]);
+
+  for(size_t i = 0; i < mesh->vIndices.size(); i++)
+    this->vIndices.push_back(mesh->vIndices[i] + IndexOffset);
 }
 
 
@@ -116,11 +114,23 @@ crate<unsigned int> Mesh::getIndexBuffer() const             { return this->vInd
 
 SerializationData& Mesh::serialize(SerializationData& data)
 {
-    return data & name & vVertices & vIndices;
+  return data & name & vVertices & vIndices;
+}
+
+
+Mesh* Mesh::getMesh(std::string name)
+{
+  if(Tools::mapHasKey(mLoadedMeshes, name))
+      return mLoadedMeshes[name];
+  
+  return new Mesh(name);
 }
 
 void Mesh::destroyAllMeshes()
 {
-    while(mLoadedMeshes.size() > 0)
-        Gum::_delete(mLoadedMeshes.begin()->second);
+  while(mLoadedMeshes.size() > 0)
+  {
+    std::cout << "deleting " << mLoadedMeshes.begin()->second << " " << mLoadedMeshes.begin()->first << std::endl;
+    Gum::_delete(mLoadedMeshes.begin()->second);
+  }
 }
