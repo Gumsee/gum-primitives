@@ -17,7 +17,6 @@ Mesh::Mesh(std::string name)
 
 Mesh::~Mesh()
 {
-  std::cout << "deleting " << name << std::endl;
   if(Tools::mapHasKey(mLoadedMeshes, name))
     mLoadedMeshes.erase(name);
 }
@@ -129,8 +128,5 @@ Mesh* Mesh::getMesh(std::string name)
 void Mesh::destroyAllMeshes()
 {
   while(mLoadedMeshes.size() > 0)
-  {
-    std::cout << "deleting " << mLoadedMeshes.begin()->second << " " << mLoadedMeshes.begin()->first << std::endl;
     Gum::_delete(mLoadedMeshes.begin()->second);
-  }
 }
