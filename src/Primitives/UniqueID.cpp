@@ -19,21 +19,26 @@ unsigned int UniqueID::getLastID()         { return LAST_RENDERABLE_ID; }
 
 color UniqueID::generateIndividualColor(const unsigned int& id)
 {
-    color ret;
+  color ret;
 	ret.r = (id & 0x000000FF) >>  0;
 	ret.g = (id & 0x0000FF00) >>  8;
 	ret.b = (id & 0x00FF0000) >> 16;
 	ret.a = (id & 0xFF000000) >> 24;
-    return ret;
+  return ret;
 }
 
 unsigned int UniqueID::colorToID(color col)
 {
-    unsigned int id = 0;
-    id += (int)col.r >>  0;
-    id += (int)col.g >>  8;
-    id += (int)col.b >> 16;
-    id += (int)col.a >> 24;
+  unsigned int id = 0;
+  id += (int)col.r >>  0;
+  id += (int)col.g >>  8;
+  id += (int)col.b >> 16;
+  id += (int)col.a >> 24;
 
-    return id;
+  return id;
+}
+
+void UniqueID::reset()
+{
+  LAST_RENDERABLE_ID = 0;
 }

@@ -20,4 +20,5 @@ public:
     color getIndividualColor() const;
     static unsigned int getLastID();
     static unsigned int colorToID(color col);
+    static void reset();
 };
